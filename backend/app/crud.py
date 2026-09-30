@@ -6,7 +6,7 @@ from app.schemas import TodoCreate, TodoUpdate
 
 
 async def list_todos(db: AsyncSession) -> list[Todo]:
-    result = await db.execute(select(Todo).order_by(Todo.id.desc))
+    result = await db.execute(select(Todo).order_by(Todo.id.desc()))
     return list(result.scalars().all())
 
 

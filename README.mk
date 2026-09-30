@@ -69,4 +69,34 @@ conda 是跨平台管理工具  启动依赖多   适用于数据科学项目
 整个后端的入口
 创建FastAPI应用  挂路由  配CORS  管理生命周期
 
+五
+用 Alembic 建表 + 测接口
+当前写了一个 Todo 类  但是数据库中还没有 todos 表
+Python类只是图纸  需要有人按照Python图纸搭建所设计的数据库
+Alembic是数据库的版本管理工具  也就是数据库的 Git
+
+核心流程
+
+改 Python 模型 (models.py)
+      ↓
+alembic revision --autogenerate -m "说明"
+      ↓  生成一个迁移脚本文件（里面是 SQL 操作的 Python 版）
+alembic upgrade head
+      ↓  执行这个脚本  真的改数据库
+数据库表结构更新了 ✅
+
+现在已经实现
+1  通过python定义数据库结构
+2  使用通过函数映射为SQL语句
+3  创建并连接数据库
+4  使用接口操作数据库
+
+六  前端
+React  前端UI
+TypeScript  检查代码  实时报错
+Vite  开发服务器 + 打包工具
+Hooks  React的组件函数  用 useState 存状态  user Effect 处理 进入页面时拉取数据
+
+1  用 Vite 生成 React + TS 模板
+
 
