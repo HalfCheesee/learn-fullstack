@@ -1,0 +1,30 @@
+services:
+  db:
+    image: postgres:17-alpine     # 用PostgreSQL官方镜像，alpine是精简版，体积小
+    container_name: learn_db      # docker容器名称
+    environment:
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: app
+      POSTGRES_DB: appdb
+    ports:
+      - "5432:5432"               # 映射本地 5432 端口 到 容器5432端口，这样本机能连接容器
+    volumes:
+      - pgdata:/var/lib/postgresql/data       # 数据保存在叫 pgdata的卷中，这样容器删除后数据不会丢失
+    healthcheck:                  # docker进行健康检查
+      test: ["CMD-SHELL", "pg_isready -U app"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  
+# 定义第二个服务，Adminer是一个数据库管理工具，可以通过网页界面管理数据库
+  adminer:
+    image: adminer:latest
+    container_name: learn_adminer
+    ports:
+      - "8080:8080"
+    depends_on:                   # 定义服务依赖关系   以下表示 adminer服务依赖db服务，只有db服务健康后，adminer才会启动
+      db:
+        condition: service_healthy
+  
+volumes:
+  pgdata:
