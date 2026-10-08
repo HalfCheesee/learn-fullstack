@@ -91,7 +91,7 @@ alembic upgrade head
 3  创建并连接数据库
 4  使用接口操作数据库
 
-六  前端
+六  前端   prefix = frontend/src/
 React  前端UI
 TypeScript  检查代码  实时报错
 Vite  开发服务器 + 打包工具
@@ -99,4 +99,34 @@ Hooks  React的组件函数  用 useState 存状态  user Effect 处理 进入�
 
 1  用 Vite 生成 React + TS 模板
 
+2  types.ts 类型定义  
+   定义前端看到的 Todo 结构 
 
+3  api.ts  前端与后端交互的函数
+   将所有的 fetch 调用封装为函数  其他地方不写 fetch
+
+4  hooks\useTodos.ts
+   作用 把数据从哪来 怎么增删改查  出错怎么办  加载中怎么显示  这些逻辑集中在一个 hook 中
+   这是最重要的一个文件  也是学 useState useEffect useCallback 的核心
+
+5  components\TodoForm.tsx  输入表单
+   作用 一个输入框 + 一个提交按钮
+
+6  components\TodoList.tsx  前端列表
+   展示任务列表 每一项带勾选框和删除按钮
+
+7  App.tsx  页面入口
+   作用 组合 TodoForm 和 TodoList 两个组件
+
+8  main.tsx  React应用入口
+   作用 让 React 应用跑起来
+
+
+
+
+1 恢复 Docker
+打开 Docker 后
+docker compose up -d
+docker compose ps
+2 恢复后端 激活 .venv
+uvicorn app.main:app --reload --port 8000
